@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Def Classs"""
+"""Def Classss"""
 
 class BaseModel():
     pass
