@@ -4,7 +4,7 @@
 
 ## Background Context :floppy_disk:
 
-### Welcome to the AirBnB clone project! (The Holberton B&B)
+###  Welcome to the AirBnB clone project! (The Holberton B&B)
 Before starting, please read the AirBnB concept page and watch this video from Isaac Wong, Cohort #5, showing what the Console should look like when you are complete with this project.
 
 #### First step: Write a command interpreter to manage your AirBnB objects.
