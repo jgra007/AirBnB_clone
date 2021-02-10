@@ -184,4 +184,4 @@ $
 - Unittests for the Console!
 
 ## Contributors :busts_in_silhouette: 
-[@Jose Ramirez - Github](https://github.com/jgra007) - [@Sebastian Contreras - Github(https://github.com/Sebas15897)] - [@Julian Archbold - Github(https://github.com/kiba0510)]
+[@Jose Ramirez - Github](https://github.com/jgra007) - [@Sebastian Contreras - Github](https://github.com/Sebas15897) - [@Julian Archbold - Github](https://github.com/kiba0510)
