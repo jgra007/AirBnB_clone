@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+__import__('sys').path.append('.')
 from models.base_model import BaseModel
 
 my_model = BaseModel()
