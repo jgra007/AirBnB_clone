@@ -33,6 +33,7 @@ class FileStorage:
         serializes __objects to the JSON file
         (path: __file_path)
         """
+        new_dict = {}
         for key, item in FileStorage.__objects.items():
             new_dict[key] = item.to_dict().copy()
         with open(FileStorage.__file_path, mode="w") as file:

@@ -1,10 +1,1 @@
-{
-    "BaseModel.ee49c413-023a-4b49-bd28-f2936c95460d": {
-        "my_number": 89,
-        "__class__": "BaseModel",
-        "updated_at": "2017-09-28T21:07:25.047381",
-        "created_at": "2017-09-28T21:07:25.047372",
-        "name": "Holberton",
-        "id": "ee49c413-023a-4b49-bd28-f2936c95460d"
-    }
-}
+{"BaseModel.ee49c413-023a-4b49-bd28-f2936c95460d": {"__class__": "BaseModel", "my_number": 89, "name": "Holberton", "created_at": "2017-09-28T21:07:25.047372", "updated_at": "2017-09-28T21:07:25.047381", "id": "ee49c413-023a-4b49-bd28-f2936c95460d"}, "BaseModel.efae7c93-15b6-4b4d-b6e9-5376e4bd7a03": {"created_at": "2021-02-12T22:11:24.222998", "updated_at": "2021-02-12T22:11:24.222998", "id": "efae7c93-15b6-4b4d-b6e9-5376e4bd7a03", "__class__": "BaseModel"}}
