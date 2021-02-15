@@ -13,17 +13,14 @@ from models.user import User
 
 
 class HBNBCommand(cmd.Cmd):
-
-
-<< << << < HEAD
-"""Class HBNB command line console prompt
+    """Class HBNB command line console prompt
        prompt - The start prompt for the HBNB console
        group - contains all the classes used in the project
     """
- prompt = "(hbnb)"
+    prompt = "(hbnb)"
 
-  __list_class = [
-       'BaseModel',
+    __list_class = [
+        'BaseModel',
         'User',
         'State',
         'City',
@@ -31,7 +28,7 @@ class HBNBCommand(cmd.Cmd):
         'Place',
         'Review']
 
-   def do_EOF(self, line):
+    def do_EOF(self, line):
         """Executes the EOF (Ctrl -D/ Ctrl-Z) commands on console"""
         return True
 
