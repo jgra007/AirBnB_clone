@@ -13,6 +13,7 @@ from models.user import User
 
 
 class HBNBCommand(cmd.Cmd):
+<<<<<<< HEAD
     """Class HBNB command line console prompt
        prompt - The start prompt for the HBNB console
        group - contains all the classes used in the project
@@ -161,3 +162,16 @@ class HBNBCommand(cmd.Cmd):
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
+=======
+    def do_quit(self, arg):
+        """Quit command to exit the program\n"""
+        return True
+        
+    def do_EOF(self, args):
+        """End of File to exit file."""
+        return True
+    
+    def emptyline(self):
+        """method so it should not execute anything"""
+        pass
+>>>>>>> 6f96884a69f6ab5427340510202e3723c328a6ee
