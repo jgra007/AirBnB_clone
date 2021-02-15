@@ -158,6 +158,15 @@ class HBNBCommand(cmd.Cmd):
 
             setattr(obj, args[2], args[3].lstrip('"').rstrip('"'))
 
+    def default(self, line):
+        """ Dafault function """
+        split_line = line.split('.')
+        if len(split_line) > 1:
+            if split_line[1] == "all()":
+                self.do_all(split_line[0])
+        else:
+            cmd.Cmd.default(self, line)
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
