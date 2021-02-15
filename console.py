@@ -13,7 +13,6 @@ from models.user import User
 
 
 class HBNBCommand(cmd.Cmd):
-
     """Class HBNB command line console prompt
        prompt - The start prompt for the HBNB console
        group - contains all the classes used in the project
