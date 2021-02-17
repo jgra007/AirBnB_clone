@@ -9,6 +9,7 @@ import os
 from console import HBNBCommand
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
+import console
 
 
 class testCommand(unittest.TestCase):
