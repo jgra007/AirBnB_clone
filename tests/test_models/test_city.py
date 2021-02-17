@@ -1,96 +1,79 @@
 #!/usr/bin/python3
-"""
-Unittest for city
-"""
-
-
-from models.city import City
-import pep8
-import os
+"""TestCases City module"""
 import unittest
+import os
+import pep8
+from models.city import City
+from datetime import datetime
 
 
 class TestCity(unittest.TestCase):
-    """
-    Unittest for the class City
-    """
+    """Test User class"""
 
-    def test_docstring(self):
-        """Checks for docstring"""
-        self.assertTrue(len(City.__doc__) > 1)
-        self.assertTrue(len(City.__init__.__doc__) > 1)
-        self.assertTrue(len(City.__str__.__doc__) > 1)
-        self.assertTrue(len(City.save.__doc__) > 1)
-        self.assertTrue(len(City.to_dict.__doc__) > 1)
+    c1 = City()
+    c2 = City()
 
-    def test_pep8(self):
-        """test pep8 comes back clean"""
+    def test_pep8_FileStorage(self):
+        """Tests pep8 style"""
         style = pep8.StyleGuide(quiet=True)
-        result = style.check_files(['models/city.py'])
-        self.assertEqual(result.total_errors, 0, "fix pep8")
+        p = style.check_files(['models/city.py'])
+        self.assertEqual(p.total_errors, 0, "fix pep8")
 
-    def setUp(self):
-        """
-        Setup test
-        """
-        pass
+    def test_docstring_module(self):
+        """Check for the DocString"""
 
-    def test_init_arg(self):
-        """pass in arg to new instance"""
-        b1 = City(23)
-        self.assertEqual(type(b1).__name__, "City")
-        self.assertFalse(hasattr(b1, "23"))
+        self.assertGreater(len(City.__doc__), 1)
 
-    def test_init_kwarg(self):
-        """Pass kwargs into the instance"""
-        b1 = City(name="Osaka")
-        self.assertEqual(type(b1).__name__, "City")
-        self.assertTrue(hasattr(b1, "name"))
-        self.assertFalse(hasattr(b1, "id"))
-        self.assertFalse(hasattr(b1, "created_at"))
-        self.assertFalse(hasattr(b1, "updated_at"))
-        self.assertTrue(hasattr(b1, "__class__"))
+    def test_create(self):
+        """Check for the objects"""
 
-    def test_str_method(self):
-        """Tests to see if each method is printing accurately"""
-        b1 = City()
-        b1printed = b1.__str__()
-        self.assertEqual(b1printed,
-                         "[City] ({}) {}".format(b1.id, b1.__dict__))
+        self.assertTrue(self.c1)
+        self.assertTrue(self.c2)
 
-    def test_before_to_dict(self):
-        """Tests instances before using to_dict conversion"""
-        b1 = City()
-        b1_dict = b1.__dict__
-        self.assertEqual(type(b1).__name__, "City")
-        self.assertTrue(hasattr(b1, '__class__'))
-        self.assertEqual(str(b1.__class__),
-                         "<class 'models.city.City'>")
-        self.assertTrue(type(b1_dict['created_at']), 'datetime.datetime')
-        self.assertTrue(type(b1_dict['updated_at']), 'datetime.datetime')
-        self.assertTrue(type(b1_dict['id']), 'str')
+    def test_file(self):
+        """Check for the file is create"""
 
-    def test_after_to_dict(self):
-        """Test instances after using to_dict conversion"""
-        my_model = City()
-        new_model = City()
-        test_dict = my_model.to_dict()
-        self.assertIsInstance(my_model, City)
-        self.assertEqual(type(my_model).__name__, "City")
-        self.assertEqual(test_dict['__class__'], "City")
-        self.assertTrue(type(test_dict['__class__']), 'str')
-        self.assertTrue(type(test_dict['created_at']), 'str')
-        self.assertTrue(type(test_dict['updated_at']), 'str')
-        self.assertTrue(type(test_dict['id']), 'str')
-        self.assertNotEqual(my_model.id, new_model.id)
+        c3 = City()
+        c3.save()
+        with open('file.json', 'r') as f:
+            self.assertIn(c3.id, f.read())
 
-    def test_has_attribute(self):
-        """Tests if the instance of BaseModel has been correctly made"""
-        b1 = City()
-        self.assertTrue(hasattr(b1, "__init__"))
-        self.assertTrue(hasattr(b1, "created_at"))
-        self.assertTrue(hasattr(b1, "updated_at"))
-        self.assertTrue(hasattr(b1, "id"))
+    def test_file_exists(self):
+        """Check for the file Exists"""
+
+        if os.path.exists('file.json'):
+            os.remove('file.json')
+
+    def test_attr_test(self):
+        """Check for user data created attributes"""
+
+        self.c1.name = "Barranquilla"
+        self.c2.name = "Puerto Colombia"
+        self.assertEqual(self.c1.name, "Barranquilla")
+        self.assertEqual(self.c2.name, "Puerto Colombia")
+
+    def test_update_name(self):
+        """Check for update user name attributes"""
+
+        self.c1.name = "Barranquilla"
+        self.c2.name = "Puerto Colombia"
+        self.c1.name = "Cartagena"
+        self.assertEqual(self.c1.name, "Cartagena")
+        self.assertEqual(self.c2.name, "Puerto Colombia")
+
+    def test_created_at(self):
+        """Check created_at is of the datetime"""
+
+        self.assertEqual(datetime, type(City().created_at))
+        self.assertEqual(datetime, type(self.c1.created_at))
+        self.assertEqual(datetime, type(self.c2.created_at))
+
+    def test_update_at(self):
+        """check update_at is of the datetime"""
+
+        self.assertEqual(datetime, type(City().updated_at))
+        self.assertEqual(datetime, type(self.c1.updated_at))
+        self.assertEqual(datetime, type(self.c2.updated_at))
 
 
 if __name__ == '__main__':

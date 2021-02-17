@@ -1,96 +1,79 @@
 #!/usr/bin/python3
-"""
-Unittest for review
-"""
-
-
-from models.review import Review
-import pep8
-import os
+"""TestCase Review module"""
 import unittest
+import os
+import pep8
+from models.review import Review
+from datetime import datetime
 
 
-class TestReview(unittest.TestCase):
-    """
-    Unittest for the class Review
-    """
+class TestCasesReview(unittest.TestCase):
+    """"""
 
-    def test_docstring(self):
-        """Checks for docstring"""
-        self.assertTrue(len(Review.__doc__) > 1)
-        self.assertTrue(len(Review.__init__.__doc__) > 1)
-        self.assertTrue(len(Review.__str__.__doc__) > 1)
-        self.assertTrue(len(Review.save.__doc__) > 1)
-        self.assertTrue(len(Review.to_dict.__doc__) > 1)
+    r1 = Review()
+    r2 = Review()
 
-    def test_pep8(self):
-        """test pep8 comes back clean"""
+    def test_pep8_FileStorage(self):
+        """Tests pep8 style"""
         style = pep8.StyleGuide(quiet=True)
-        result = style.check_files(['models/review.py'])
-        self.assertEqual(result.total_errors, 0, "fix pep8")
+        p = style.check_files(['models/review.py'])
+        self.assertEqual(p.total_errors, 0, "fix pep8")
 
-    def setUp(self):
-        """
-        Setup test
-        """
-        pass
+    def test_docstring_module(self):
+        """Check for the DocString"""
 
-    def test_init_arg(self):
-        """pass in arg to new instance"""
-        b1 = Review(23)
-        self.assertEqual(type(b1).__name__, "Review")
-        self.assertFalse(hasattr(b1, "23"))
+        self.assertGreater(len(Review.__doc__), 1)
 
-    def test_init_kwarg(self):
-        """Pass kwargs into the instance"""
-        b1 = Review(name="Betty")
-        self.assertEqual(type(b1).__name__, "Review")
-        self.assertTrue(hasattr(b1, "name"))
-        self.assertFalse(hasattr(b1, "id"))
-        self.assertFalse(hasattr(b1, "created_at"))
-        self.assertFalse(hasattr(b1, "updated_at"))
-        self.assertTrue(hasattr(b1, "__class__"))
+    def test_create(self):
+        """Check for the objects"""
 
-    def test_str_method(self):
-        """Tests to see if each method is printing accurately"""
-        b1 = Review()
-        b1printed = b1.__str__()
-        self.assertEqual(b1printed,
-                         "[Review] ({}) {}".format(b1.id, b1.__dict__))
+        self.assertTrue(self.r1)
+        self.assertTrue(self.r2)
 
-    def test_before_to_dict(self):
-        """Tests instances before using to_dict conversion"""
-        b1 = Review()
-        b1_dict = b1.__dict__
-        self.assertEqual(type(b1).__name__, "Review")
-        self.assertTrue(hasattr(b1, '__class__'))
-        self.assertEqual(str(b1.__class__),
-                         "<class 'models.review.Review'>")
-        self.assertTrue(type(b1_dict['created_at']), 'datetime.datetime')
-        self.assertTrue(type(b1_dict['updated_at']), 'datetime.datetime')
-        self.assertTrue(type(b1_dict['id']), 'str')
+    def test_file(self):
+        """Check for the file is create"""
 
-    def test_after_to_dict(self):
-        """Test instances after using to_dict conversion"""
-        my_model = Review()
-        new_model = Review()
-        test_dict = my_model.to_dict()
-        self.assertIsInstance(my_model, Review)
-        self.assertEqual(type(my_model).__name__, "Review")
-        self.assertEqual(test_dict['__class__'], "Review")
-        self.assertTrue(type(test_dict['__class__']), 'str')
-        self.assertTrue(type(test_dict['created_at']), 'str')
-        self.assertTrue(type(test_dict['updated_at']), 'str')
-        self.assertTrue(type(test_dict['id']), 'str')
-        self.assertNotEqual(my_model.id, new_model.id)
+        r3 = Review()
+        r3.save()
+        with open('file.json', 'r') as f:
+            self.assertIn(r3.id, f.read())
 
-    def test_has_attribute(self):
-        """Tests if the instance of BaseModel has been correctly made"""
-        b1 = Review()
-        self.assertTrue(hasattr(b1, "__init__"))
-        self.assertTrue(hasattr(b1, "created_at"))
-        self.assertTrue(hasattr(b1, "updated_at"))
-        self.assertTrue(hasattr(b1, "id"))
+    def test_file_exists(self):
+        """Check for the file Exists"""
+
+        if os.path.exists('file.json'):
+            os.remove('file.json')
+
+    def test_attr_test(self):
+        """Check for user data created attributes"""
+
+        self.r1.name = "Good"
+        self.r2.name = "More or Less"
+        self.assertEqual(self.r1.name, "Good")
+        self.assertEqual(self.r2.name, "More or Less")
+
+    def test_update_name(self):
+        """Check for update user name attributes"""
+
+        self.r1.name = "Good"
+        self.r2.name = "More or Less"
+        self.r1.name = "Fine"
+        self.assertEqual(self.r1.name, "Fine")
+        self.assertEqual(self.r2.name, "More or Less")
+
+    def test_created_at(self):
+        """Check created_at is of the datetime"""
+
+        self.assertEqual(datetime, type(Review().created_at))
+        self.assertEqual(datetime, type(self.r1.created_at))
+        self.assertEqual(datetime, type(self.r2.created_at))
+
+    def test_update_at(self):
+        """check update_at is of the datetime"""
+
+        self.assertEqual(datetime, type(Review().updated_at))
+        self.assertEqual(datetime, type(self.r1.updated_at))
+        self.assertEqual(datetime, type(self.r2.updated_at))
 
 
 if __name__ == '__main__':
