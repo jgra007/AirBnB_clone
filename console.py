@@ -55,6 +55,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         else:
             new_inst = eval(args[0] + '()')
+            storage.save()
             print(new_inst.id)
 
     def do_show(self, line):
@@ -75,6 +76,28 @@ class HBNBCommand(cmd.Cmd):
             key_find = args[0] + '.' + args[1]
             if key_find in objects.keys():
                 print(objects[key_find])
+            else:
+                print('** no instance found **')
+
+    def do_destroy(self, line):
+        """Deletes an instance based on the class name and id
+        (save the change into the JSON file).
+        Ex: $ destroy BaseModel 1234-1234-1234
+        """
+        args = line.split()
+        objects = storage.all()
+
+        if len(args) == 0:
+            print('** class name missing **')
+        elif args[0] not in self.__list_class:
+            print("** class doesn't exist **")
+        elif len(args) == 1:
+            print('** instance id missing **')
+        else:
+            key_find = args[0] + '.' + args[1]
+            if key_find in objects.keys():
+                objects.pop(key_find, None)
+                storage.save()
             else:
                 print('** no instance found **')
 
@@ -100,28 +123,6 @@ class HBNBCommand(cmd.Cmd):
                 if obj.__class__.__name__ == args[0]:
                     new_list.append(obj.__str__())
             print(new_list)
-
-    def do_destroy(self, line):
-        """Deletes an instance based on the class name and id
-        (save the change into the JSON file).
-        Ex: $ destroy BaseModel 1234-1234-1234
-        """
-        args = line.split()
-        objects = storage.all()
-
-        if len(args) == 0:
-            print('** class name missing **')
-        elif args[0] not in self.__list_class:
-            print("** class doesn't exist **")
-        elif len(args) == 1:
-            print('** instance id missing **')
-        else:
-            key_find = args[0] + '.' + args[1]
-            if key_find in objects.keys():
-                objects.pop(key_find, None)
-                storage.save()
-            else:
-                print('** no instance found **')
 
     def do_update(self, line):
         """
@@ -157,6 +158,7 @@ class HBNBCommand(cmd.Cmd):
                 return
 
             setattr(obj, args[2], args[3].lstrip('"').rstrip('"'))
+            storage.save()
 
     def default(self, line):
         """ Dafault function """

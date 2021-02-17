@@ -1,22 +1,17 @@
 #!/usr/bin/python3
-import json
-from models.base_model import BaseModel
-from models.user import User
-from models.amenity import Amenity
-from models.city import City
-from models.place import Place
-from models.review import Review
-from models.state import State
+from datetime import datetime
+import uuid
+import models
 
 
 class BaseModel:
-    """Class Basemodel that defines common attrs/methods
+    """BaseModel class that defines common attrs/methods
     for other class"""
 
-    def __init__(self, *arg, **kwargs):
+    def __init__(self, *args, **kwargs):
         """Args:
                 id: id of instance
-                created at: time of creation
+                created_at: time of creation
                 updated_at: time of creation or modification
         """
         if not kwargs:
@@ -25,14 +20,14 @@ class BaseModel:
             models.storage.new(self)
 
         else:
-            for key, value in kwargs.items():
-                if key == "created_at" or key == "updated_at":
-                    value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
-                if key != "__class__":
-                    setattr(self, key, value)
+            for attr_name, attr in kwargs.items():
+                if attr_name == "created_at" or attr_name == "updated_at":
+                    attr = datetime.strptime(attr, "%Y-%m-%dT%H:%M:%S.%f")
+                if attr_name != "__class__":
+                    setattr(self, attr_name, attr)
 
     def __str__(self):
-        """that prints class name, id, dict"""
+        """returns str representation"""
         return "[{}] ({}) {}".format(str(type(self).__name__), self.id,
                                      str(self.__dict__))
 
@@ -47,9 +42,10 @@ class BaseModel:
         models.storage.save()
 
     def to_dict(self):
-        """returns a dictionary representation of __dict__"""
-        dct = dict(**self.__dict__)
-        dct["__class__"] = str(type(self).__name__)
-        dct["created_at"] = self.created_at.isoformat()
-        dct["updated_at"] = self.updated_at.isoformat()
-        return dct
+        """returns a dictionary representation of __dict__
+        w/ __class__ added"""
+        d = dict(**self.__dict__)
+        d['__class__'] = str(type(self).__name__)
+        d['created_at'] = self.created_at.isoformat()
+        d['updated_at'] = self.updated_at.isoformat()
+        return d
