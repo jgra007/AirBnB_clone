@@ -2,6 +2,7 @@
 """This is the console for the Holberton HNBN project"""
 
 import cmd
+import models
 from models.base_model import BaseModel
 from models import storage
 from models.city import City

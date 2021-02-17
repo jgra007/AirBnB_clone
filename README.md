@@ -7,7 +7,7 @@
 ###  Welcome to the AirBnB clone project! (The Holberton B&B)
 Before starting, please read the AirBnB concept page and watch this video from Isaac Wong, Cohort #5, showing what the Console should look like when you are complete with this project.
 
-#### First step: Write a command interpreter to manage your AirBnB objects.
+### First step: Write a command interpreter to manage your AirBnB objects.
 This is the first step towards building your first full web application: the AirBnB clone. This first step is very important because you will use what you build during this project with all other following projects: HTML/CSS templating, database storage, API, front-end integration…
 
 Each task is linked and will help you to:
@@ -183,5 +183,5 @@ $
 - Update from dictionary
 - Unittests for the Console!
 
-## Contributors :busts_in_silhouette: 
+### Contributors :busts_in_silhouette: 
 [@Jose Ramirez - Github](https://github.com/jgra007) - [@Sebastian Contreras - Github](https://github.com/Sebas15897) - [@Julian Archbold - Github](https://github.com/kiba0510)
