@@ -125,41 +125,52 @@ class HBNBCommand(cmd.Cmd):
                     new_list.append(obj.__str__())
             print(new_list)
 
-    def do_update(self, line):
+    def do_update(self, arg):
+        """updates an instance by class name and id adding or updating
+        the attribute
+        Args:
+            arg (str): class name, instance id and attributes
         """
-        Updates an instance based on the class name
-        and id by adding or updating attribute (save
-        the change into the JSON file).
-        Ex: $ update BaseModel <valid id> attrib value
-        """
-        args = line.split()
-        objects = storage.all()
+        args = arg.split()
 
-        if len(args) == 0:
-            print("** class name missing **")
+        my_inst = getobj(arg)
 
-        elif args[0] not in self.__list_class:
-            print("** class doesn't exist **")
-
-        elif len(args) == 1:
-            print("** instance id missing **")
-
-        elif len(args) == 2:
-            print("** attribute name missing **")
-
-        elif len(args) == 3:
-            print("** value missing **")
-
-        else:
-            key_find = args[0] + '.' + args[1]
-            obj = objects.get(key_find, None)
-
-            if not obj:
-                print("** no instance found **")
+        if my_inst:
+            if len(args) < 3:
+                errors("!att_name")
+                return
+            if len(args) < 4:
+                errors("!value")
                 return
 
-            setattr(obj, args[2], args[3].lstrip('"').rstrip('"'))
-            storage.save()
+            if args[2] in ("created_at", "updated_at", "id"):
+                return
+
+            if '"' in args[3]:
+                i = 3
+                concat = args[3].replace('"', "")
+                i += 1
+                while i < len(args):
+                    if '"' in args[i]:
+                        concat += " " + args[i].replace('"', "")
+                        break
+                    concat += " " + args[i]
+                    i += 1
+                if '"' in concat:
+                    args[3] = concat.replace('"', "")
+                else:
+                    args[3] = concat
+
+            try:
+                convert = int(args[3])
+            except ValueError:
+                try:
+                    convert = float(args[3])
+                except ValueError:
+                    convert = args[3]
+
+            my_inst.__dict__[args[2]] = convert
+            my_inst.save()
 
     def default(self, line):
         """ Dafault function """
