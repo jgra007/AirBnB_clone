@@ -122,6 +122,20 @@ class TestBaseModel(unittest.TestCase):
         with open("file.json", 'r') as f:
             self.assertIn(b3.id, f.read())
 
+    def create(self):
+        """ Create instance command line """
+        return HBNBCommand()
+
+    def test_quit(self, server=None):
+        """Creates HBNBCommand"""
+        con = self.create()
+        self.assertTrue(con.onecmd("quit"))
+
+    def test_EOF(self):
+        """Tests the quit command"""
+        con = self.create()
+        self.assertTrue(con.onecmd("EOF"))
+
 
 if __name__ == '__main__':
     unittest.main()
